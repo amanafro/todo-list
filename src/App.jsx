@@ -3,10 +3,8 @@ import Delete from "./assets/EpCircleClose.svg";
 
 function App() {
   return (
-    <main>
-      <div className={"form"}>
-        <TodoList />
-      </div>
+    <main className={"grid place-items-center"}>
+      <TodoList />
     </main>
   );
 }
@@ -23,38 +21,57 @@ function TodoList() {
   };
 
   const RemoveFromList = (index) => {
-    const newArray = todo.filter((todo) => index !== index);
-    setNewTodo(newArray);
+    console.log("delete");
   };
 
+  const title = "Todo List!!";
+
   return (
-    <>
-      <h2>Todo List!!</h2>
+    <div
+      className={
+        "bg-stone-500 p-5 mt-48 rounded-2xl shadow-2xl grid max-w-[90]"
+      }
+    >
+      <h2
+        className={
+          "text-center text-4xl font-bold text-white font-title shadow-2xl"
+        }
+      >
+        {title}
+      </h2>
       <input
+        className={"w-auto h-12 rounded-lg text-2xl"}
         type={"text"}
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
       />
       <br />
-      <button onClick={AddToList}>Add</button>
-      <ul>
-        <div>
-          {todo.map((list, index) => (
-            <div className={"list"}>
-              <li key={index}>
-                {list}{" "}
-                <img
-                  key={list}
-                  src={Delete}
-                  onClick={RemoveFromList}
-                  alt={"close"}
-                />
-              </li>
-            </div>
-          ))}
-        </div>
-      </ul>
-    </>
+      <button
+        onClick={AddToList}
+        className={
+          "my-4 p-2 w-auto text-xl place-items-center rounded-lg bg-stone-200"
+        }
+      >
+        Add
+      </button>
+      {todo.map((list, index) => (
+        <li
+          key={list}
+          className={
+            "decoration-0 flex justify-between align-middle w-auto text-2xl text-white p-2.5"
+          }
+        >
+          {list}
+          <img
+            className={"pl-2.5"}
+            key={list}
+            src={Delete}
+            onClick={RemoveFromList}
+            alt={"close"}
+          />
+        </li>
+      ))}
+    </div>
   );
 }
 
