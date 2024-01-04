@@ -20,8 +20,8 @@ function TodoList() {
     }
   };
 
-  const RemoveFromList = (index) => {
-    console.log("delete");
+  const RemoveFromList = () => {
+    setTodo((list) => list.filter((entry) => !entry));
   };
 
   const title = "Todo List!!";
