@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Delete from "./assets/EpCircleClose.svg";
 
 function App() {
@@ -13,6 +13,17 @@ function TodoList() {
   const [todo, setTodo] = useState([]);
   const [newTodo, setNewTodo] = useState("");
 
+  useEffect(() => {
+    const storedItems = JSON.parse(localStorage.getItem("items"));
+    if (storedItems) {
+      setTodo(storedItems);
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(todo));
+  }, [todo]);
+
   const AddToList = () => {
     if (newTodo.trim() !== "") {
       setTodo([...todo, newTodo.trim()]);
@@ -20,8 +31,8 @@ function TodoList() {
     }
   };
 
-  const RemoveFromList = () => {
-    setTodo((list) => list.filter((entry) => !entry));
+  const RemoveFromList = (entryToRemove) => {
+    setTodo((list) => list.filter((entry) => entry !== entryToRemove));
   };
 
   const title = "Todo List!!";
@@ -54,19 +65,19 @@ function TodoList() {
       >
         Add
       </button>
-      {todo.map((list, index) => (
+      {todo.map((entry, index) => (
         <li
-          key={list}
+          key={index}
           className={
             "decoration-0 flex justify-between align-middle w-auto text-2xl text-white p-2.5"
           }
         >
-          {list}
+          {entry}
           <img
             className={"pl-2.5"}
-            key={list}
+            key={index}
             src={Delete}
-            onClick={RemoveFromList}
+            onClick={() => RemoveFromList(entry)}
             alt={"close"}
           />
         </li>
